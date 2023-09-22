@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.BasicRobots;
 
 import androidx.annotation.NonNull;
 
@@ -31,6 +31,8 @@ import com.acmerobotics.roadrunner.ftc.PositionVelocityPair;
 import com.acmerobotics.roadrunner.ftc.RawEncoder;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -38,6 +40,8 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.Localizer;
+import org.firstinspires.ftc.teamcode.PoseMessage;
 
 import java.lang.Math;
 import java.util.Arrays;
@@ -45,8 +49,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Config
-public final class MecanumDrive {
+public class MecanumDrive {
     public static class Params {
+        //Don't change these after tuning
         // drive model parameters
         public double inPerTick = 0;
         public double lateralInPerTick = 1;
@@ -103,6 +108,9 @@ public final class MecanumDrive {
     public Pose2d pose;
 
     private final LinkedList<Pose2d> poseHistory = new LinkedList<>();
+
+    //Please check if this is not null before attempting to use it for telemetry/delay
+    public OpMode opMode;
 
     public class DriveLocalizer implements Localizer {
         public final Encoder leftFront, leftRear, rightRear, rightFront;
@@ -176,6 +184,7 @@ public final class MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
+        //TODO: MOTOR NAMES
         leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         leftBack = hardwareMap.get(DcMotorEx.class, "leftBack");
         rightBack = hardwareMap.get(DcMotorEx.class, "rightBack");
@@ -196,7 +205,13 @@ public final class MecanumDrive {
 
         localizer = new DriveLocalizer();
 
+        this.opMode = null;
+
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
+    }
+    public MecanumDrive(HardwareMap hardwareMap, Pose2d pose, OpMode opMode){
+        this(hardwareMap, pose);
+        this.opMode = opMode;
     }
 
     public void setDrivePowers(PoseVelocity2d powers) {
