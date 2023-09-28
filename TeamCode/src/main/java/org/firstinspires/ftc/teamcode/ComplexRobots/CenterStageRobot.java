@@ -13,10 +13,10 @@ public class CenterStageRobot extends MecanumDrive {
 
     //Sensors
 
-
+    //Constructor
     public CenterStageRobot(HardwareMap hardwareMap, Pose2d pose, OpMode opMode) {
         super(hardwareMap, pose, opMode);
-        armMotor = null;
+        armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
     }
 
 
