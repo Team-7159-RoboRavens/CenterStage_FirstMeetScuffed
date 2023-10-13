@@ -454,4 +454,11 @@ public class MecanumDrive {
                 0.25, 0.1
         );
     }
+
+    public void setMotorPower(double powLeftFront, double powRightFront, double powLeftBack, double powRightBack){
+        rightFront.setPower(powRightFront);
+        leftFront.setPower(powLeftFront);
+        rightBack.setPower(powRightBack);
+        leftBack.setPower(powLeftBack);
+    }
 }
