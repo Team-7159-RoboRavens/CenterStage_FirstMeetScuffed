@@ -17,6 +17,9 @@ public class EitanNadavDriveBM extends AbstractButtonMap{
     @Override
     public void loop(CenterStageRobot robot, OpMode opMode) {
         buttonPressed = false;
+
+        MotorPowers dpadMotorPowers = DPadControl.dpadStrafe(opMode.gamepad1, 0.5);
+
         if(opMode.gamepad1.right_trigger > 0.1){
             powLeftFront = opMode.gamepad1.right_trigger*triggerMultipler;
             powRightFront = opMode.gamepad1.right_trigger*triggerMultipler;
