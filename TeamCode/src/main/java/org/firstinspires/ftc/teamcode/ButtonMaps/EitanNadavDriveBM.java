@@ -8,37 +8,43 @@ public class EitanNadavDriveBM extends AbstractButtonMap{
     private final double triggerMultipler = 1;
     private boolean buttonPressed = false;
 
-    private double powLeftFront = 0;
-    private double powRightFront = 0;
-    private double powLeftBack = 0;
-    private double powRightBack = 0;
+    private MotorPowers mp;
 
     @Override
     public void loop(CenterStageRobot robot, OpMode opMode) {
         buttonPressed = false;
 
-        MotorPowers dpadMotorPowers = DPadControl.dpadStrafe(opMode.gamepad1, 0.5);
+        //Field Oriented Drive (joysticks), 3rd priority
+        MotorPowers fodMotorPowers = FieldOrientedDrive.fieldOrientedDrive(opMode.gamepad1, robot.imu, 0.8);
+        if(fodMotorPowers.isNotZero()){
+            buttonPressed = true;
+            mp = fodMotorPowers;
+        }
 
+        //Pivot turn is combined with triggers, 2nd priority
+        MotorPowers pivotTurnMotorPowers = robot.pivotTurn(0.7, opMode.gamepad1.right_bumper, opMode.gamepad1.left_bumper);
+        MotorPowers triggerMotorPowers = new MotorPowers(0);
         if(opMode.gamepad1.right_trigger > 0.1){
-            powLeftFront = opMode.gamepad1.right_trigger*triggerMultipler;
-            powRightFront = opMode.gamepad1.right_trigger*triggerMultipler;
-            powLeftBack = opMode.gamepad1.right_trigger*triggerMultipler;
-            powRightBack = opMode.gamepad1.right_trigger*triggerMultipler;
-            buttonPressed = true;
+            triggerMotorPowers = new MotorPowers(opMode.gamepad1.right_trigger*triggerMultipler);
         }else if(opMode.gamepad1.left_trigger > 0.1){
-            powLeftFront = -opMode.gamepad1.right_trigger*triggerMultipler;
-            powRightFront = -opMode.gamepad1.right_trigger*triggerMultipler;
-            powLeftBack = -opMode.gamepad1.right_trigger*triggerMultipler;
-            powRightBack = -opMode.gamepad1.right_trigger*triggerMultipler;
+            triggerMotorPowers = new MotorPowers(opMode.gamepad1.right_trigger*triggerMultipler);
+        }
+        if(triggerMotorPowers.isNotZero() || pivotTurnMotorPowers.isNotZero()){
             buttonPressed = true;
+            triggerMotorPowers.combineWith(pivotTurnMotorPowers);
+            mp = triggerMotorPowers;
         }
 
-        if(!buttonPressed){
-            powLeftFront = 0;
-            powRightFront = 0;
-            powLeftBack = 0;
-            powRightBack = 0;
+        //DPads OctoStrafe, 1st priority
+        MotorPowers dpadMotorPowers = DPadControl.dpadStrafe(opMode.gamepad1, 0.7);
+        if(dpadMotorPowers.isNotZero()){
+            buttonPressed = true;
+            mp = dpadMotorPowers;
         }
-        robot.setMotorPower(powLeftFront, powRightFront, powLeftBack, powRightBack);
+        
+        if(!buttonPressed){
+            mp = new MotorPowers(0);
+        }
+        robot.setMotorPowers(mp);
     }
 }

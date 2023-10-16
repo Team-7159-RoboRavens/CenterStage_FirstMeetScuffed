@@ -258,6 +258,12 @@ public class MecanumDrive {
         rightBack.setPower(wheelVels.rightBack.get(0) / maxPowerMag);
         rightFront.setPower(wheelVels.rightFront.get(0) / maxPowerMag);
     }
+    public void setMotorPower(double powLeftFront, double powRightFront, double powLeftBack, double powRightBack){
+        rightFront.setPower(powRightFront);
+        leftFront.setPower(powLeftFront);
+        rightBack.setPower(powRightBack);
+        leftBack.setPower(powLeftBack);
+    }
 
     public final class FollowTrajectoryAction implements Action {
         public final TimeTrajectory timeTrajectory;
@@ -473,12 +479,5 @@ public class MecanumDrive {
                 defaultVelConstraint, defaultAccelConstraint,
                 0.25, 0.1
         );
-    }
-
-    public void setMotorPower(double powLeftFront, double powRightFront, double powLeftBack, double powRightBack){
-        rightFront.setPower(powRightFront);
-        leftFront.setPower(powLeftFront);
-        rightBack.setPower(powRightBack);
-        leftBack.setPower(powLeftBack);
     }
 }
