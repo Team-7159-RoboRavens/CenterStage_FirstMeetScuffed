@@ -28,10 +28,10 @@ public class MotorPowers {
     }
 
     public void combineWith(MotorPowers other){
-        double leftFrontMax = Math.max(Math.abs(this.leftFront) + Math.abs(other.leftFront), 1);
-        double rightFrontMax = Math.max(Math.abs(this.rightFront) + Math.abs(other.rightFront), 1);
-        double leftBackMax = Math.max(Math.abs(this.leftBack) + Math.abs(other.rightBack), 1);
-        double rightBackMax = Math.max(Math.abs(this.rightBack) + Math.abs(other.rightBack), 1);
+        double leftFrontMax = Math.max(Math.abs(this.leftFront + other.leftFront), 1);
+        double rightFrontMax = Math.max(Math.abs(this.rightFront + other.rightFront), 1);
+        double leftBackMax = Math.max(Math.abs(this.leftBack + other.rightBack), 1);
+        double rightBackMax = Math.max(Math.abs(this.rightBack + other.rightBack), 1);
         double denominator = Math.max(Math.max(Math.max(leftFrontMax, rightFrontMax),leftBackMax), rightBackMax);
         this.leftFront = (other.leftFront + this.leftFront) / denominator;
         this.rightFront = (other.rightFront + this.rightFront) / denominator;
