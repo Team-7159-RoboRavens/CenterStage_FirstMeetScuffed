@@ -6,9 +6,9 @@ import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
 public class KrishDriveBM extends AbstractButtonMap{
 
-    private final double fastStrafePower = 1;
-    private final double mediumStrafePower = 0.6;
-    private final double slowStrafePower = 0.3;
+    private final double fastStrafePower = 0.8;
+    private final double mediumStrafePower = 0.5;
+    private final double slowStrafePower = 0.2;
 
     private boolean buttonPressed = false;
     private boolean motorBrake = false;
