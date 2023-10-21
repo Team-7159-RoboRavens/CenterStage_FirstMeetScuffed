@@ -234,12 +234,10 @@ public class MecanumDrive {
     }
 
     public MotorPowers pivotTurn(double power, boolean rightBumper, boolean leftBumper) {
-        power = power*0.5;
-        double mult = 0.3;
         if(leftBumper) {
-            return new MotorPowers(power, -power*mult, power, -power * mult);
+            return new MotorPowers(-power, power, -power, power);
         } else if(rightBumper) {
-            return new MotorPowers(-power, power*mult, -power, power * mult);
+            return new MotorPowers(power, -power, power, -power);
         }
         return new MotorPowers(0,0,0,0);
     }

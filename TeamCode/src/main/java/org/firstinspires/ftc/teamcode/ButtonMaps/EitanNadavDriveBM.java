@@ -5,9 +5,9 @@ import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
 public class EitanNadavDriveBM extends AbstractButtonMap{
 
-    private final double triggerMultipler = 1;
-    private final double fastStrafePower = 0.9;
-    private final double slowStrafePower = 0.3;
+    private final double triggerMultipler = 0.9;
+    private final double fastStrafePower = 0.75;
+    private final double slowStrafePower = 0.35;
 
     private boolean buttonPressed = false;
     private boolean combineWithPivotTurn = false;
@@ -22,7 +22,7 @@ public class EitanNadavDriveBM extends AbstractButtonMap{
         mp = new MotorPowers(0);
 
         //Brake button (bypasses everything)
-        if(opMode.gamepad1.b){
+        if(opMode.gamepad1.a){
             robot.setMotorPowers(mp);
             //Seriously, nothing else will run.
             return;
@@ -36,7 +36,7 @@ public class EitanNadavDriveBM extends AbstractButtonMap{
         }
 
         //Field Oriented Drive (joysticks), 4th priority
-        MotorPowers fodMotorPowers = FieldOrientedDrive.fieldOrientedDrive(opMode.gamepad1, robot.imu, 1);
+        MotorPowers fodMotorPowers = FieldOrientedDrive.fieldOrientedDrive(opMode.gamepad1, robot.imu, fastStrafePower);
         if(fodMotorPowers.isNotZero()){
 //            buttonPressed = true;
             mp = fodMotorPowers;
