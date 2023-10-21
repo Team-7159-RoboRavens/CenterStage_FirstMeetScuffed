@@ -214,7 +214,7 @@ public class MecanumDrive {
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        localizer = null; /*new ThreeDeadWheelLocalizer(hardwareMap, PARAMS.inPerTick);*/
+        localizer = /*new ThreeDeadWheelLocalizer(hardwareMap, PARAMS.inPerTick);*/ new DriveLocalizer();
 
         this.opMode = null;
 

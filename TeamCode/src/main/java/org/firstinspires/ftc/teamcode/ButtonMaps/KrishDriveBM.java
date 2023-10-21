@@ -19,6 +19,7 @@ public class KrishDriveBM extends AbstractButtonMap{
     @Override
     public void loop(CenterStageRobot robot, OpMode opMode) {
 
+        //Speed Settings
         if(opMode.gamepad1.left_bumper){
             currentStrafeMotorPower = slowStrafePower;
         }else if(opMode.gamepad1.right_bumper){
@@ -27,20 +28,20 @@ public class KrishDriveBM extends AbstractButtonMap{
             currentStrafeMotorPower = mediumStrafePower;
         }
 
-        //DPads OctoStrafe and Arc Turn, 2nd priority
+        //DPads OctoStrafe and Trigger Arc Turn, 2nd priority
         MotorPowers dpadMotorPowers = DPadControl.dpadStrafe(opMode.gamepad1, currentStrafeMotorPower);
         MotorPowers triggerMotorPowers = new MotorPowers(0);
         if(opMode.gamepad1.right_trigger > 0.1){
             //Forward
-            triggerMotorPowers = new MotorPowers();
+            triggerMotorPowers = new MotorPowers(0, opMode.gamepad1.right_trigger*currentStrafeMotorPower, 0, opMode.gamepad1.right_trigger*currentStrafeMotorPower);
         }else if(opMode.gamepad1.left_trigger > 0.1){
             //Backward
-            triggerMotorPowers = new MotorPowers(-opMode.gamepad1.left_trigger*triggerMultipler);
+            triggerMotorPowers = new MotorPowers(opMode.gamepad1.left_trigger*currentStrafeMotorPower, 0, opMode.gamepad1.left_trigger*currentStrafeMotorPower, 0);
         }
-        if(dpadMotorPowers.isNotZero()){
+        if(dpadMotorPowers.isNotZero() || triggerMotorPowers.isNotZero()){
 //            buttonPressed = true;
             mp = dpadMotorPowers;
-            mp.combineWith(pivotTurnMotorPowers);
+            mp.combineWith(triggerMotorPowers);
         }
 
         //Field Oriented Drive (joysticks), 1st priority
@@ -50,7 +51,7 @@ public class KrishDriveBM extends AbstractButtonMap{
             mp = fodMotorPowers;
         }
 
-        //        if(!buttonPressed){
+//        if(!buttonPressed){
 //            mp = new MotorPowers(0);
 //        }
         robot.setMotorPowers(mp);
