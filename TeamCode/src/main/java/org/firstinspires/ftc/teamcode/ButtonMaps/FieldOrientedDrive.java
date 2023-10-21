@@ -14,7 +14,7 @@ public class FieldOrientedDrive {
     public static MotorPowers fieldOrientedDrive(Gamepad gamepad, IMU imu, double maxMotorPower){
         //Provide a deadzone of +-0.1
         double x = gamepad.left_stick_x > 0.1 || gamepad.left_stick_x < -0.1 ? gamepad.left_stick_x : 0;
-        double y = gamepad.left_stick_y > 0.1 || gamepad.left_stick_y < -0.1 ? gamepad.left_stick_y : 0;
+        double y = gamepad.left_stick_y > 0.1 || gamepad.left_stick_y < -0.1 ? -gamepad.left_stick_y : 0;
         double rotate = gamepad.right_stick_x > 0.1 || gamepad.right_stick_x < -0.1 ? gamepad.right_stick_x : 0;
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
