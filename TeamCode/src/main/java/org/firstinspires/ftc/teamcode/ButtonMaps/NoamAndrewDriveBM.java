@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.ButtonMaps;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
+@Config
 public class NoamAndrewDriveBM extends AbstractButtonMap {
-    private final double triggerMultipler = 0.9;
-    private final double slowStrafeMultiplier = 0.35;
-    private final double powerMultiplier = 0.5;
+    //TODO: Change back to private final when done with dash
+    public static double triggerMultipler = 0.9;
+    public static double slowStrafeMultiplier = 0.35;
+    public static double powerMultiplier = 0.5;
 
     private boolean buttonPressed = false;
     private boolean combineWithPivotTurn = false;

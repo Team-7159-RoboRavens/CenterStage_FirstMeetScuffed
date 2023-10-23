@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.ButtonMaps;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
-
+@Config
 public class KrishDriveBM extends AbstractButtonMap{
-
-    private final double fastStrafePower = 0.8;
-    private final double mediumStrafePower = 0.5;
-    private final double slowStrafePower = 0.2;
+    //TODO: Change back to final when done with dash
+    public static double fastStrafePower = 0.8;
+    public static double mediumStrafePower = 0.5;
+    public static double slowStrafePower = 0.2;
 
     private boolean buttonPressed = false;
     private boolean motorBrake = true;
