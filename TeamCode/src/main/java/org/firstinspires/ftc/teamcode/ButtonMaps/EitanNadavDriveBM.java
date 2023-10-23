@@ -24,10 +24,11 @@ public class EitanNadavDriveBM extends AbstractButtonMap{
         buttonPressed = false;
         mp = new MotorPowers(0);
 
+        //Reset Yaw for FOD
         if(opMode.gamepad1.back){
             robot.imu.resetYaw();
         }
-        opMode.telemetry.addData("Robot Yaw", robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
+//        opMode.telemetry.addData("Robot Yaw", robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
 
         //Brake button (bypasses everything)
         if(opMode.gamepad1.a){

@@ -26,6 +26,11 @@ public class KrishDriveBM extends AbstractButtonMap{
         //Set mp to zero at the start, if no buttons are pressed it will never change
         mp = new MotorPowers(0);
 
+        //Reset Yaw for FOD
+        if(opMode.gamepad1.back){
+            robot.imu.resetYaw();
+        }
+
         //Motor Brake (toggle) w/ cooldown to avoid rapidly flipping
         if(opMode.gamepad1.b && et.time() > 500){
             et.reset();
