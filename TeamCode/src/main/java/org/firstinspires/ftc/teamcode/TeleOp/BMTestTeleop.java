@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.ButtonMaps.EitanNadavDriveBM;
 import org.firstinspires.ftc.teamcode.ButtonMaps.SampleButtonMap;
 import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
-@TeleOp(name="Button Map Test")
+@TeleOp(name="Button Map Test (Eitan/Nadav)")
 public class BMTestTeleop extends OpMode {
     //Global Variables
     CenterStageRobot robot;
