@@ -16,15 +16,8 @@ public class MotorPowers {
         this.rightBack = all;
     }
 
-    public boolean isNotZero(){
+    public boolean isNotZero() {
         return this.leftFront != 0 || this.rightFront != 0 || this.leftBack != 0 || this.rightBack != 0;
-    }
-
-    public void setMotorPowers(double leftFront, double rightFront, double leftBack, double rightBack){
-        this.leftFront = leftFront;
-        this.rightFront = rightFront;
-        this.leftBack = leftBack;
-        this.rightBack = rightBack;
     }
 
     public void setMotorPowers(double allPower){

@@ -15,22 +15,25 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
     private boolean combineWithPivotTurn = false;
 
     private double currentMotorPower;
-    private MotorPowers mp = new MotorPowers(0);
+    private MotorPowers mp;// = new MotorPowers(0);
 
     @Override
     public void loop(CenterStageRobot robot, OpMode opMode) {
+        mp = new MotorPowers(0);
         currentMotorPower = 1;
         /*
          * Button A - Complete break
          */
         if (opMode.gamepad1.a) {
             mp.setMotorPowers(0);
+            opMode.telemetry.addLine("Break!!");
             return;
         }
 
         //Dpad strafe using dpad
         if (opMode.gamepad1.b) {
             currentMotorPower *= slowStrafeMultiplier;
+            opMode.telemetry.addLine("Slow Multiplier Active!");
         }
         MotorPowers dpadMotorPowers = DPadControl.dpadStrafe(opMode.gamepad1, currentMotorPower);
 
@@ -38,15 +41,23 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
         MotorPowers fodMotorPowers = FieldOrientedDrive.fieldOrientedDrive(opMode.gamepad1, robot.imu, currentMotorPower);
         if (fodMotorPowers.isNotZero()) {
             mp = fodMotorPowers;
+            opMode.telemetry.addLine("FOD Active!");
         }
 
         /*
          * Pivot turn methods
          */
         //Pivot Turn using joystick
-        MotorPowers joystickPivotTurnMotorPowers = robot.pivotTurn(currentMotorPower, opMode.gamepad1.right_stick_x > 0.1, opMode.gamepad1.right_stick_x < -0.1);
+        if(Math.abs(opMode.gamepad1.right_stick_x) > 0.1){
+            MotorPowers joystickPivotTurnMotorPowers = robot.pivotTurn(currentMotorPower*(Math.abs(opMode.gamepad1.right_stick_x)), opMode.gamepad1.right_stick_x > 0.1, opMode.gamepad1.right_stick_x < -0.1);
+            mp = joystickPivotTurnMotorPowers;
+        }
+
         //Pivot Turn Using bumpers
-        MotorPowers bumperPivotTurnMotorPowers = robot.pivotTurn(currentMotorPower, opMode.gamepad1.right_bumper, opMode.gamepad1.left_bumper);
+        if(opMode.gamepad1.right_bumper || opMode.gamepad1.left_bumper){
+            MotorPowers bumperPivotTurnMotorPowers = robot.pivotTurn(currentMotorPower, opMode.gamepad1.right_bumper, opMode.gamepad1.left_bumper);
+            mp = bumperPivotTurnMotorPowers;
+        }
 
         /*
          * Normal Drive
@@ -55,13 +66,16 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
         //Forward
         if (opMode.gamepad1.right_trigger > 0.1) {
             triggerMotorPowers = new MotorPowers(opMode.gamepad1.right_trigger * triggerMultipler);
+            opMode.telemetry.addData("Motors should be moving", null);
+            mp = triggerMotorPowers;
         }
         //Backward
         else if (opMode.gamepad1.left_trigger > 0.1) {
             //Backward
             triggerMotorPowers = new MotorPowers(-opMode.gamepad1.left_trigger * triggerMultipler);
-
-
+            mp = triggerMotorPowers;
         }
+
+        robot.setMotorPowers(mp);
     }
 }
