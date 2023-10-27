@@ -30,12 +30,19 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
             return;
         }
 
-        //Dpad strafe using dpad
+
+        //Slow Strafe Button
         if (opMode.gamepad1.b) {
             currentMotorPower *= slowStrafeMultiplier;
             opMode.telemetry.addLine("Slow Multiplier Active!");
         }
+
+        //Dpad strafe using dpad
         MotorPowers dpadMotorPowers = DPadControl.dpadStrafe(opMode.gamepad1, currentMotorPower);
+        if(dpadMotorPowers.isNotZero()){
+            mp = dpadMotorPowers;
+            opMode.telemetry.addLine("DPad Active!");
+        }
 
         //Field-Oriented Driving using left joystick
         MotorPowers fodMotorPowers = FieldOrientedDrive.fieldOrientedDrive(opMode.gamepad1, robot.imu, currentMotorPower);
@@ -48,14 +55,15 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
          * Pivot turn methods
          */
         //Pivot Turn using joystick
-        if(Math.abs(opMode.gamepad1.right_stick_x) > 0.1){
-            MotorPowers joystickPivotTurnMotorPowers = robot.pivotTurn(currentMotorPower*(Math.abs(opMode.gamepad1.right_stick_x)), opMode.gamepad1.right_stick_x > 0.1, opMode.gamepad1.right_stick_x < -0.1);
-            mp = joystickPivotTurnMotorPowers;
-        }
+//        if(Math.abs(opMode.gamepad1.right_stick_x) > 0.1){
+//            MotorPowers joystickPivotTurnMotorPowers = robot.pivotTurn(currentMotorPower*(Math.abs(opMode.gamepad1.right_stick_x)), opMode.gamepad1.right_stick_x > 0.1, opMode.gamepad1.right_stick_x < -0.1);
+//            mp = joystickPivotTurnMotorPowers;
+//        }
 
         //Pivot Turn Using bumpers
         if(opMode.gamepad1.right_bumper || opMode.gamepad1.left_bumper){
             MotorPowers bumperPivotTurnMotorPowers = robot.pivotTurn(currentMotorPower, opMode.gamepad1.right_bumper, opMode.gamepad1.left_bumper);
+            opMode.telemetry.addLine("Bumper Pivot Turn Active!");
             mp = bumperPivotTurnMotorPowers;
         }
 
@@ -66,13 +74,14 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
         //Forward
         if (opMode.gamepad1.right_trigger > 0.1) {
             triggerMotorPowers = new MotorPowers(opMode.gamepad1.right_trigger * triggerMultipler);
-            opMode.telemetry.addData("Motors should be moving", null);
+            opMode.telemetry.addLine("Trigger Right (forward) active!");
             mp = triggerMotorPowers;
         }
         //Backward
         else if (opMode.gamepad1.left_trigger > 0.1) {
             //Backward
             triggerMotorPowers = new MotorPowers(-opMode.gamepad1.left_trigger * triggerMultipler);
+            opMode.telemetry.addLine("Trigger Left (backward) active!");
             mp = triggerMotorPowers;
         }
 
