@@ -25,7 +25,7 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
          * Button A - Complete break
          */
         if (opMode.gamepad1.a) {
-            mp.setMotorPowers(0);
+            robot.setAllMotorPowers(0);
             opMode.telemetry.addLine("Break!!");
             return;
         }
