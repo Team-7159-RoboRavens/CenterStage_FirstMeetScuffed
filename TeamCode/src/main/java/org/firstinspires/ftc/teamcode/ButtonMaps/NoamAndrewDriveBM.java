@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 @Config
 public class NoamAndrewDriveBM extends AbstractButtonMap {
     //TODO: Change back to private final when done with dash
-    public static double triggerMultipler = 0.9;
+    public static double triggerMultipler = 0.5;
     public static double slowStrafeMultiplier = 0.35;
     public static double powerMultiplier = 0.5;
 
@@ -20,7 +20,7 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
     @Override
     public void loop(CenterStageRobot robot, OpMode opMode) {
         mp = new MotorPowers(0);
-        currentMotorPower = 1;
+        currentMotorPower = 0.5;
         /*
          * Button A - Complete break
          */
@@ -30,6 +30,9 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
             return;
         }
 
+        if(opMode.gamepad1.back){
+            robot.imu.resetYaw();
+        }
 
         //Slow Strafe Button
         if (opMode.gamepad1.b) {
