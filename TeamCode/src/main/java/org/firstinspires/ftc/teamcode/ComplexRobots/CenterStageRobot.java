@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.ComplexRobots;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -10,7 +12,8 @@ import org.firstinspires.ftc.teamcode.BasicRobots.MecanumDrive;
 
 public class CenterStageRobot extends MecanumDrive {
     //Motors
-//    public final DcMotorEx armMotor;
+    public final DcMotorEx linearSlidesMotor1;
+    public final DcMotorEx linearSlidesMotor2;
 //    public final Servo stickServo;
 
     //Sensors
@@ -18,8 +21,19 @@ public class CenterStageRobot extends MecanumDrive {
     //Constructor
     public CenterStageRobot(HardwareMap hardwareMap, Pose2d pose, OpMode opMode) {
         super(hardwareMap, pose, opMode);
-//        armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
-//        stickServo = hardwareMap.get(Servo.class, "stickServo");
+
+        //Linear Slide Motors
+        linearSlidesMotor1 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor1");
+        linearSlidesMotor2 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor2");
+        //Initializing
+        linearSlidesMotor1.setDirection(DcMotor.Direction.FORWARD);
+        linearSlidesMotor2.setDirection(DcMotor.Direction.FORWARD);
+        linearSlidesMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        linearSlidesMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        linearSlidesMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linearSlidesMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linearSlidesMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        linearSlidesMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 

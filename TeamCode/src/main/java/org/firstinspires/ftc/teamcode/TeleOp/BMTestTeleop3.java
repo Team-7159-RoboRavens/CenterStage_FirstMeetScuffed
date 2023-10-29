@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ButtonMaps.AbstractButtonMap;
-import org.firstinspires.ftc.teamcode.ButtonMaps.EitanNadavDriveBM;
-import org.firstinspires.ftc.teamcode.ButtonMaps.NoamAndrewDriveBM;
+import org.firstinspires.ftc.teamcode.ButtonMaps.Drive.NoamAndrewDriveBM;
 import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
 @TeleOp(name="Button Map Test 3 (Noam/Andrew)")
