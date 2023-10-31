@@ -26,7 +26,7 @@ public class CenterStageRobot extends MecanumDrive {
         linearSlidesMotor1 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor1");
         linearSlidesMotor2 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor2");
         //Initializing
-        linearSlidesMotor1.setDirection(DcMotor.Direction.FORWARD);
+        linearSlidesMotor1.setDirection(DcMotor.Direction.REVERSE);
         linearSlidesMotor2.setDirection(DcMotor.Direction.FORWARD);
         linearSlidesMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         linearSlidesMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

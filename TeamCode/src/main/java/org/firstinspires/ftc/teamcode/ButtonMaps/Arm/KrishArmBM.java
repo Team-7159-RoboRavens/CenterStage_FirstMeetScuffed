@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 @Config
 public class KrishArmBM extends AbstractButtonMap {
     public static double linearSlidesDownMultiplier = 0.25;
-    public static double linearSlidesUpMultiplier = 0.8;
-    public static double holdModePower = 0.07;
+    public static double linearSlidesUpMultiplier = 0.65;
+    public static double holdModePower = 0.05;
 
     private boolean holdMode = false;
     private ElapsedTime et = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);

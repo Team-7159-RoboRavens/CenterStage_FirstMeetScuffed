@@ -15,7 +15,7 @@ public class BMTestTeleop extends OpMode {
 
     //Button Maps
     AbstractButtonMap buttonMap;
-    AbstractButtonMap slidesButtonMap;
+
 
     @Override
     public void init() {
