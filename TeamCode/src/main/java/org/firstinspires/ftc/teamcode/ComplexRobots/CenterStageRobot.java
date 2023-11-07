@@ -18,6 +18,7 @@ public class CenterStageRobot extends MecanumDrive {
     public final DcMotorEx intakeMotor;
 
     public final Servo outputServo;
+    public final Servo airplaneServo;
 
     //Sensors
 
@@ -40,6 +41,7 @@ public class CenterStageRobot extends MecanumDrive {
 
         //Initialize Output Servo
         outputServo = hardwareMap.get(Servo.class, "outputServo");
+        //TODO: find numbers
         outputServo.scaleRange(0,1);
 
         //Initialize Intake Motor
@@ -48,6 +50,11 @@ public class CenterStageRobot extends MecanumDrive {
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //Initialize Airplane Servo
+        airplaneServo = hardwareMap.get(Servo.class, "airplaneServo");
+        //TODO: find numbers
+        airplaneServo.scaleRange(0,1);
     }
 
 
