@@ -14,7 +14,10 @@ public class CenterStageRobot extends MecanumDrive {
     //Motors
     public final DcMotorEx linearSlidesMotor1;
     public final DcMotorEx linearSlidesMotor2;
-//    public final Servo stickServo;
+
+    public final DcMotorEx intakeMotor;
+
+    public final Servo outputServo;
 
     //Sensors
 
@@ -25,7 +28,7 @@ public class CenterStageRobot extends MecanumDrive {
         //Linear Slide Motors
         linearSlidesMotor1 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor1");
         linearSlidesMotor2 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor2");
-        //Initializing
+        //Setup
         linearSlidesMotor1.setDirection(DcMotor.Direction.REVERSE);
         linearSlidesMotor2.setDirection(DcMotor.Direction.FORWARD);
         linearSlidesMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -34,6 +37,17 @@ public class CenterStageRobot extends MecanumDrive {
         linearSlidesMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearSlidesMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         linearSlidesMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //Initialize Output Servo
+        outputServo = hardwareMap.get(Servo.class, "outputServo");
+        outputServo.scaleRange(0,1);
+
+        //Initialize Intake Motor
+        intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
+        //Setup
+        intakeMotor.setDirection(DcMotor.Direction.FORWARD);
+        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 
