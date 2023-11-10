@@ -9,10 +9,16 @@ import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
 @Config
 public class AndrewArmBM extends AbstractButtonMap {
-    private double power = 0.5;
+    public static double slideUpPower = 0.45;
+    public static double slideDownPower = 0.25;
+    public static double intakePower = 0.5;
+    public static double holdPower = 0.05;
 
     //TODO: Magic Numbers!!!
-    private double holdPower = 0.07;
+    private ElapsedTime et = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+    private double intakeOutTime = 0;
+    private boolean intakeOut = false;
+
     @Override
     public void loop(CenterStageRobot robot, OpMode opMode) {
         /*
@@ -33,24 +39,46 @@ public class AndrewArmBM extends AbstractButtonMap {
                 robot.linearSlidesMotor2.setPower(0);
             } else {
                 opMode.telemetry.addData("LS Direction", "DOWN");
-                robot.linearSlidesMotor1.setPower(-opMode.gamepad2.right_trigger);
-                robot.linearSlidesMotor2.setPower(-opMode.gamepad2.right_trigger);
+                robot.linearSlidesMotor1.setPower(-slideDownPower);
+                robot.linearSlidesMotor2.setPower(-slideDownPower);
             }
         } else if (opMode.gamepad2.a) {
             opMode.telemetry.addData("LS Direction", "UP");
-            robot.linearSlidesMotor1.setPower(opMode.gamepad2.left_trigger);
-            robot.linearSlidesMotor2.setPower(opMode.gamepad2.left_trigger);
+            robot.linearSlidesMotor1.setPower(slideUpPower);
+            robot.linearSlidesMotor2.setPower(slideUpPower);
         } else {
-            opMode.telemetry.addData("LS Direction", "OFF");
+            opMode.telemetry.addData("LS Direction", "OFF+HOLD");
             //Small amount of power for hold mode
             robot.linearSlidesMotor1.setPower(holdPower);
             robot.linearSlidesMotor2.setPower(holdPower);
         }
 
-
         /* Release Pixel */
+        //TODO: check 0/1 for in/out
         if(opMode.gamepad2.b){
-            
+            robot.outputServo.setPosition(1);
+            intakeOut = true;
+            intakeOutTime = et.time();
+        }
+        //Automatically retracts intake after 500 ms
+        if(intakeOut && et.time()-intakeOutTime > 500){
+            robot.outputServo.setPosition(0);
+            intakeOut = false;
+        }
+
+        //Intake Inward/Forward (RB) + Outward/Reverse (LB)
+        if(opMode.gamepad2.right_bumper){
+            robot.intakeMotor.setPower(intakePower);
+        }else if(opMode.gamepad2.left_bumper) {
+            robot.intakeMotor.setPower(-intakePower);
+        }else{
+            robot.intakeMotor.setPower(0);
+        }
+
+        //Plane Servo (dpad)
+        //TODO: find position
+        if(opMode.gamepad2.dpad_up || opMode.gamepad2.dpad_down || opMode.gamepad2.dpad_left || opMode.gamepad2.dpad_right){
+            robot.airplaneServo.setPosition(0);
         }
     }
 }
