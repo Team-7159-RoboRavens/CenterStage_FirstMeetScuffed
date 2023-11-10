@@ -26,13 +26,13 @@ public class ArianaArmBm extends AbstractButtonMap {
                 robot.linearSlidesMotor2.setPower(0);
             } else {
                 opMode.telemetry.addData("LS Direction", "DOWN");
-                robot.linearSlidesMotor1.setPower(-linearSlidesDownMultiplier* opMode.gamepad2.right_trigger);
-                robot.linearSlidesMotor2.setPower(-linearSlidesDownMultiplier * opMode.gamepad2.right_trigger);
+                robot.linearSlidesMotor1.setPower(-linearSlidesDownMultiplier * opMode.gamepad2.left_trigger);
+                robot.linearSlidesMotor2.setPower(-linearSlidesDownMultiplier * opMode.gamepad2.left_trigger);
             }
         } else if (opMode.gamepad2.right_trigger > 0.1) {
             opMode.telemetry.addData("LS Direction", "UP");
-            robot.linearSlidesMotor1.setPower(linearSlidesUpMultiplier * opMode.gamepad2.left_trigger);
-            robot.linearSlidesMotor2.setPower(linearSlidesUpMultiplier * opMode.gamepad2.left_trigger);
+            robot.linearSlidesMotor1.setPower(linearSlidesUpMultiplier * opMode.gamepad2.right_trigger);
+            robot.linearSlidesMotor2.setPower(linearSlidesUpMultiplier * opMode.gamepad2.right_trigger);
         } else {
             opMode.telemetry.addData("LS Direction", "OFF");
             robot.linearSlidesMotor1.setPower(0);
@@ -47,11 +47,15 @@ public class ArianaArmBm extends AbstractButtonMap {
             robot.outputServo.setPosition(0);
             intakeOut = false;
         }
+
         if (opMode.gamepad2.b) {
             robot.intakeMotor.setPower(intakePower);
         } else if (opMode.gamepad2.x) {
             robot.intakeMotor.setPower(-intakePower);
+        }else {
+            robot.intakeMotor.setPower(0);
         }
+        
         if (opMode.gamepad2.y) {
             robot.airplaneServo.setPosition(0);
         }
