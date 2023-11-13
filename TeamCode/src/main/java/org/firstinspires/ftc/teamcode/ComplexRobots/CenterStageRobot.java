@@ -63,7 +63,7 @@ public class CenterStageRobot extends MecanumDrive {
         airplaneServo.setPosition(0);
 
 
-        //TODO: Linear slide helper methods for auto
+        //TODO: Linear slide helper methods for auto (later)
     }
 
 

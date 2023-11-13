@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.ButtonMaps.Arm.KrishArmBM;
 import org.firstinspires.ftc.teamcode.ButtonMaps.Drive.KrishDriveBM;
 import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
-@TeleOp(name="Button Map Test 2 (Krish Slides+Arm)")
+@TeleOp(name="Button Map Test: Krish Drive & Arm")
 public class BMTestTeleop2 extends OpMode {
     //Global Variables
     CenterStageRobot robot;
