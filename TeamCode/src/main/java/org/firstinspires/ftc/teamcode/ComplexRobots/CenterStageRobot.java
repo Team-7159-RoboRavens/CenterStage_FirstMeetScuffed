@@ -57,10 +57,10 @@ public class CenterStageRobot extends MecanumDrive {
         //Initialize Airplane Servo
         airplaneServo = hardwareMap.get(Servo.class, "airplaneServo");
         //TODO: find numbers
-        airplaneServo.scaleRange(0,1);
+        airplaneServo.scaleRange(0.65,0.82);
         //Force to be in the right place
         //TODO: find number
-        airplaneServo.setPosition(0);
+        airplaneServo.setPosition(1);
 
 
         //TODO: Linear slide helper methods for auto (later)

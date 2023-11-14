@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.tuning;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
+@TeleOp
 public class ArmTuner extends OpMode {
     CenterStageRobot robot;
     ElapsedTime et;
@@ -35,9 +37,9 @@ public class ArmTuner extends OpMode {
             }
         }
         if(gamepad1.dpad_up){
-            robot.intakeMotor.setPower(0.5);
+            robot.intakeMotor.setPower(1);
         }else if(gamepad1.dpad_down){
-            robot.intakeMotor.setPower(-0.5);
+            robot.intakeMotor.setPower(-1);
         }else{
             robot.intakeMotor.setPower(0);
         }
