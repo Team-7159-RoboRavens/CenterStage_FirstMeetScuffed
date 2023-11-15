@@ -266,6 +266,11 @@ public class MecanumDrive {
     //NEEDS A LOM BECAUSE IT LOOPS ITSELF
     public static int ticksStraight = 1015;
     public static int ticksStrafe = 1060;
+    /**
+     * Cringe
+     * @param direction 0=forwards, 1=right, 2=back, 3=left
+     * @param linearOpMode Needed for opModeIsActive();
+     */
     public void slowStartSlowStop(int direction, double power,  double tiles, LinearOpMode linearOpMode){
         //DIRECTIONS: 0=forwards, 1=right, 2=back, 3=left
         double savedMotorPos = leftFront.getCurrentPosition();
