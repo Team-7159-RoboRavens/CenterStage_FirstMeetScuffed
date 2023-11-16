@@ -17,6 +17,8 @@ public class ArmTuner extends OpMode {
         robot = new CenterStageRobot(hardwareMap, new Pose2d(0,0,0), this);
         et = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         servoTime = 0;
+        telemetry.addLine("redeee");
+        telemetry.update();
     }
 
     @Override
@@ -36,13 +38,12 @@ public class ArmTuner extends OpMode {
                 servoTime = et.time();
             }
         }
-        if(gamepad1.dpad_up){
-            robot.intakeMotor.setPower(1);
-        }else if(gamepad1.dpad_down){
-            robot.intakeMotor.setPower(-1);
+        if(gamepad1.left_stick_y > 0.1 || gamepad1.left_stick_y < -0.1){
+            robot.intakeMotor.setPower(-gamepad1.left_stick_y*0.8);
         }else{
             robot.intakeMotor.setPower(0);
         }
+        telemetry.addData("Intake Power", -gamepad1.left_stick_y);
         telemetry.addData("Output Servo Pos", robot.outputServo.getPosition());
         telemetry.addData("Airplane Servo Pos", robot.airplaneServo.getPosition());
         telemetry.update();

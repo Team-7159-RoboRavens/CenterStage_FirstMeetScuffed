@@ -12,7 +12,7 @@ public class KrishArmBM extends AbstractButtonMap {
     public static double linearSlidesDownMultiplier = 0.25;
     public static double linearSlidesUpMultiplier = 0.65;
     public static double holdModePower = 0.05;
-    public static double intakeMotorPower = 0.5;
+    public static double intakeMotorPower = 0.35;
 
     private boolean holdMode = false;
     private boolean outputServo = false;
