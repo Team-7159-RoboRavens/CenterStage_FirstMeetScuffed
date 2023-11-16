@@ -303,8 +303,9 @@ public class MecanumDrive {
         //Speed up
         while ((Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0) && (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 0.26) && linearOpMode.opModeIsActive()){
             double tilesPercent = Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles);
-            double function = 2 * ((0.5-0)/(0.2857-0)) * power * tilesPercent;
-            if(function < 0.1) function = 0.25;
+            //power = (maxPower / percent amnt from 0 to maxPower) * percent completed
+            double function = (power / 0.26) * tilesPercent;
+            if(function < 0.25) function = 0.25;
             setMotorPower(lfm ? function : -function, rfm ? function : -function, lbm ? function : -function, rbm ? function : -function);
             opMode.telemetry.addData("% Tiles", tilesPercent);
             opMode.telemetry.addData("Power", function);
@@ -313,7 +314,7 @@ public class MecanumDrive {
         //Constant speed
         while (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0.26 && (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 0.6) && linearOpMode.opModeIsActive()){
             double function = power;
-            if(function < 0.1) function = 0.25;
+            if(function < 0.25) function = 0.25;
             setMotorPower(lfm ? function : -function, rfm ? function : -function, lbm ? function : -function, rbm ? function : -function);
             opMode.telemetry.addLine("Constant Speed Phase");
             opMode.telemetry.addData("Power", function);
@@ -322,8 +323,8 @@ public class MecanumDrive {
         //Slow down
         while (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0.6 && (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 1) && linearOpMode.opModeIsActive()){
             double tilesPercent = Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles);
-            double function = -2.2 * power * (tilesPercent - 1);
-            if(function < 0.1) function = 0.25;
+            double function = -(power / 0.4) * (tilesPercent - 1);
+            if(function < 0.25) function = 0.25;
             setMotorPower(lfm ? function : -function, rfm ? function : -function, lbm ? function : -function, rbm ? function : -function);
             opMode.telemetry.addData("% Tiles", tilesPercent);
             opMode.telemetry.addData("Power", function);
