@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
 @Config
 public class KrishArmBM extends AbstractButtonMap {
-    public static double linearSlidesDownMultiplier = 0.25;
-    public static double linearSlidesUpMultiplier = 0.65;
-    public static double holdModePower = 0.05;
+    public static double linearSlidesDownMultiplier = 0.35;
+    public static double linearSlidesUpMultiplier = 0.5;
+    public static double holdModePower = 0.04;
     public static double intakeMotorPower = 0.5;
 
     private boolean holdMode = false;
@@ -61,9 +61,9 @@ public class KrishArmBM extends AbstractButtonMap {
         opMode.telemetry.addData("LS Hold Mode", holdMode);
 
         //Output Servo
-        if(opMode.gamepad2.x && et.time()-servoToggleTime > 300){
-            if(outputServo) robot.outputServo.setPosition(0);
-            else robot.outputServo.setPosition(1);
+        if(opMode.gamepad2.x && et.time()-servoToggleTime > 500){
+            if(outputServo) robot.outputServo.setPosition(1);
+            else robot.outputServo.setPosition(0);
             outputServo = !outputServo;
             servoToggleTime = et.time();
         }

@@ -7,11 +7,11 @@ import org.firstinspires.ftc.teamcode.ButtonMaps.AbstractButtonMap;
 import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
 public class ArianaArmBm extends AbstractButtonMap {
-    public static double slideUpPower = 0.45;
-    public static double slideDownPower = 0.25;
     public static double intakePower = 0.5;
-    public static double linearSlidesDownMultiplier = 0.25;
-    public static double linearSlidesUpMultiplier = 0.65;
+    public static double linearSlidesDownMultiplier = 0.35;
+    public static double linearSlidesUpMultiplier = 0.5;
+    public static double outputRetractTime = 1000;
+
     private ElapsedTime et = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private double intakeOutTime = 0;
     private boolean intakeOut = false;
@@ -38,13 +38,14 @@ public class ArianaArmBm extends AbstractButtonMap {
             robot.linearSlidesMotor1.setPower(0);
             robot.linearSlidesMotor2.setPower(0);
         }
+
         if (opMode.gamepad2.right_bumper) {
-             robot.outputServo.setPosition(1);
+             robot.outputServo.setPosition(0);
              intakeOut = true;
              intakeOutTime = et.time();
         }
-        if (intakeOut && et.time()-intakeOutTime > 500) {
-            robot.outputServo.setPosition(0);
+        if (intakeOut && et.time()-intakeOutTime > outputRetractTime) {
+            robot.outputServo.setPosition(1);
             intakeOut = false;
         }
 
