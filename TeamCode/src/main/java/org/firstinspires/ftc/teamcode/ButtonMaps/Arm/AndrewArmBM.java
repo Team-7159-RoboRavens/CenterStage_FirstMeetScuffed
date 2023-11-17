@@ -9,10 +9,11 @@ import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
 @Config
 public class AndrewArmBM extends AbstractButtonMap {
-    public static double slideUpPower = 0.45;
-    public static double slideDownPower = 0.25;
-    public static double intakePower = 0.5;
-    public static double holdPower = 0.05;
+    public static double slideUpPower = 0.5;
+    public static double slideDownPower = 0.35;
+    public static double intakePower = 0.35;
+    public static double holdPower = 0.04;
+    public static double outputRetractTime = 1000;
 
     //TODO: Magic Numbers!!!
     private ElapsedTime et = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
@@ -54,15 +55,14 @@ public class AndrewArmBM extends AbstractButtonMap {
         }
 
         /* Release Pixel */
-        //TODO: check 0/1 for in/out
         if(opMode.gamepad2.b){
-            robot.outputServo.setPosition(1);
+            robot.outputServo.setPosition(0);
             intakeOut = true;
             intakeOutTime = et.time();
         }
-        //Automatically retracts intake after 500 ms
-        if(intakeOut && et.time()-intakeOutTime > 500){
-            robot.outputServo.setPosition(0);
+        //Automatically retracts intake after 1000 ms
+        if(intakeOut && et.time()-intakeOutTime > outputRetractTime){
+            robot.outputServo.setPosition(1);
             intakeOut = false;
         }
 
