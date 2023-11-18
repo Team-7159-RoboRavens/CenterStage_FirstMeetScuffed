@@ -46,12 +46,8 @@ public class ArmTuner extends OpMode {
         }else{
             robot.intakeMotor.setPower(0);
         }
-<<<<<<< Updated upstream
-        telemetry.addData("Output Servo Pos", robot.outputServo.getPosition());
-=======
         telemetry.addData("Intake Power", -gamepad1.left_stick_y);
 //        telemetry.addData("Output Servo Pos", robot.outputServo.getPosition());
->>>>>>> Stashed changes
         telemetry.addData("Airplane Servo Pos", robot.airplaneServo.getPosition());
         telemetry.update();
     }
