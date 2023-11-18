@@ -23,12 +23,15 @@ public class ArmTuner extends OpMode {
     public void loop() {
         if(et.time()-servoTime > 100){
             if(gamepad1.a){
-                robot.outputServo.setPosition(robot.outputServo.getPosition()+0.05);
+                robot.outputServo.setPower(1);
                 servoTime = et.time();
             }else if(gamepad1.b){
-                robot.outputServo.setPosition(robot.outputServo.getPosition()-0.05);
+                robot.outputServo.setPower(-1);
                 servoTime = et.time();
-            }else if(gamepad1.x){
+            }else{
+                robot.outputServo.setPower(-1);
+            }
+            if(gamepad1.x){
                 robot.airplaneServo.setPosition(robot.airplaneServo.getPosition()+0.05);
                 servoTime = et.time();
             } else if (gamepad1.y) {
@@ -43,7 +46,12 @@ public class ArmTuner extends OpMode {
         }else{
             robot.intakeMotor.setPower(0);
         }
+<<<<<<< Updated upstream
         telemetry.addData("Output Servo Pos", robot.outputServo.getPosition());
+=======
+        telemetry.addData("Intake Power", -gamepad1.left_stick_y);
+//        telemetry.addData("Output Servo Pos", robot.outputServo.getPosition());
+>>>>>>> Stashed changes
         telemetry.addData("Airplane Servo Pos", robot.airplaneServo.getPosition());
         telemetry.update();
     }

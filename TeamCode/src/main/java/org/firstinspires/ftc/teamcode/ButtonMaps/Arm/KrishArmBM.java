@@ -16,11 +16,13 @@ public class KrishArmBM extends AbstractButtonMap {
 
     private boolean holdMode = false;
     private boolean outputServo = false;
+    private boolean outputServoMoving = false;
     private boolean intakeEnabled = false;
     private boolean intakeReversed = false;
     private ElapsedTime et = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private double lsToggleTime = 0;
     private double servoToggleTime = 0;
+    private double servoCycleTime = 0;
     private double intakeToggleTime = 0;
     private double intakeReverseToggleTime = 0;
 
@@ -61,11 +63,17 @@ public class KrishArmBM extends AbstractButtonMap {
         opMode.telemetry.addData("LS Hold Mode", holdMode);
 
         //Output Servo
-        if(opMode.gamepad2.x && et.time()-servoToggleTime > 500){
-            if(outputServo) robot.outputServo.setPosition(1);
-            else robot.outputServo.setPosition(0);
+        if(opMode.gamepad2.x && et.time()-servoToggleTime > robot.outputServoCycleTime+100){
+            if(outputServo) robot.outputServo.setPower(1);
+            else robot.outputServo.setPower(-1);
             outputServo = !outputServo;
             servoToggleTime = et.time();
+            servoCycleTime = et.time();
+            outputServoMoving = true;
+        }
+        if(outputServoMoving && et.time()-servoCycleTime > robot.outputServoCycleTime){
+            robot.outputServo.setPower(0);
+            outputServoMoving = false;
         }
 
         //Intake Toggle (right bumper)

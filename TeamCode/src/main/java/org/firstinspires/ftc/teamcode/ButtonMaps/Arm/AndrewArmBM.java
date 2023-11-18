@@ -19,6 +19,7 @@ public class AndrewArmBM extends AbstractButtonMap {
     private ElapsedTime et = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private double intakeOutTime = 0;
     private boolean intakeOut = false;
+    private boolean intakeInTransit = false;
 
     @Override
     public void loop(CenterStageRobot robot, OpMode opMode) {
@@ -54,16 +55,23 @@ public class AndrewArmBM extends AbstractButtonMap {
             robot.linearSlidesMotor2.setPower(holdPower);
         }
 
-        /* Release Pixel */
-        if(opMode.gamepad2.b){
-            robot.outputServo.setPosition(0);
+        //Eject Pixel - B
+        if (!intakeInTransit && opMode.gamepad2.b) {
+            robot.outputServo.setPower(1);
             intakeOut = true;
+            intakeInTransit = true;
             intakeOutTime = et.time();
         }
-        //Automatically retracts intake after 1000 ms
-        if(intakeOut && et.time()-intakeOutTime > outputRetractTime){
-            robot.outputServo.setPosition(1);
-            intakeOut = false;
+        //Automatically retract when it reaches out position
+        if (intakeInTransit && et.time()-intakeOutTime > robot.outputServoCycleTime) {
+            if(intakeOut){
+                robot.outputServo.setPower(-1);
+                intakeOut = false;
+                intakeOutTime = et.time();
+            }else{
+                robot.outputServo.setPower(0);
+                intakeInTransit = false;
+            }
         }
 
         //Intake Inward/Forward (RB) + Outward/Reverse (LB)

@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.ComplexRobots;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -10,6 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.BasicRobots.MecanumDrive;
 
+@Config
 public class CenterStageRobot extends MecanumDrive {
     //Motors
     public final DcMotorEx linearSlidesMotor1;
@@ -17,8 +20,10 @@ public class CenterStageRobot extends MecanumDrive {
 
     public final DcMotorEx intakeMotor;
 
-    public final Servo outputServo;
+    public final CRServo outputServo;
+    public static double outputServoCycleTime = 800;
     public final Servo airplaneServo;
+
 
     //Sensors
 
@@ -40,12 +45,12 @@ public class CenterStageRobot extends MecanumDrive {
         linearSlidesMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //Initialize Output Servo
-        outputServo = hardwareMap.get(Servo.class, "outputServo");
-        //TODO: find numbers
-        outputServo.scaleRange(0,1);
-        //Force to be in the right place
-        //TODO: find number
-        outputServo.setPosition(0);
+        outputServo = hardwareMap.get(CRServo.class, "outputServo");
+//        //TODO: find numbers
+//        outputServo.scaleRange(0,1);
+//        //Force to be in the right place
+//        //TODO: find number
+//        outputServo.setPosition(0);
 
         //Initialize Intake Motor
         intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
