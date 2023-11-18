@@ -18,9 +18,9 @@ public class AutoRedBackstage extends LinearOpMode {
         telemetry.addLine("Ready.");
         telemetry.update();
         waitForStart();
-        robot.slowStartSlowStop(1, 0.7, 1.5, this);
+        robot.slowStartSlowStop(2, 0.7, 1.5, this);
         sleep(500);
-        robot.intakeMotor.setPower(-1);
+        robot.intakeMotor.setPower(-0.5);
         sleep(1000);
         robot.intakeMotor.setPower(0);
     }
