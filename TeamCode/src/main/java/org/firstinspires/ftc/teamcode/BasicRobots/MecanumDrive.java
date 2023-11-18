@@ -250,17 +250,87 @@ public class MecanumDrive {
         for (DualNum<Time> power : wheelVels.all()) {
             maxPowerMag = Math.max(maxPowerMag, power.value());
         }
-
         leftFront.setPower(wheelVels.leftFront.get(0) / maxPowerMag);
         leftBack.setPower(wheelVels.leftBack.get(0) / maxPowerMag);
         rightBack.setPower(wheelVels.rightBack.get(0) / maxPowerMag);
         rightFront.setPower(wheelVels.rightFront.get(0) / maxPowerMag);
     }
+
     public void setMotorPower(double powLeftFront, double powRightFront, double powLeftBack, double powRightBack){
         rightFront.setPower(powRightFront);
         leftFront.setPower(powLeftFront);
         rightBack.setPower(powRightBack);
         leftBack.setPower(powLeftBack);
+    }
+
+    //NEEDS A LOM BECAUSE IT LOOPS ITSELF
+    public static int ticksStraight = 1015;
+    public static int ticksStrafe = 1060;
+    /**
+     * Cringe
+     * @param direction 0=forwards, 1=right, 2=back, 3=left
+     * @param linearOpMode Needed for opModeIsActive();
+     */
+    public void slowStartSlowStop(int direction, double power,  double tiles, LinearOpMode linearOpMode){
+        //DIRECTIONS: 0=forwards, 1=right, 2=back, 3=left
+        double savedMotorPos = leftFront.getCurrentPosition();
+        int ticks = ticksStraight;
+        //these just make it so there's not an if statement for every direction
+        //true = forwards, false = backwards
+        //this just sets up for forward, saves an if statement and errors
+        boolean lfm = true;
+        boolean rfm = true;
+        boolean lbm = true;
+        boolean rbm = true;
+        if(direction == 2){
+            lfm = false;
+            rfm = false;
+            lbm = false;
+            rbm = false;
+        }
+        if(direction == 3){
+            ticks = ticksStrafe;
+            lfm = false;
+            rbm = false;
+        }else if(direction == 1) {
+            ticks = ticksStrafe;
+            rfm = false;
+            lbm = false;
+        }
+//      opMode.telemetry.addData("% Tiles", tilesPercent);
+//      opMode.telemetry.addData("Power", function);
+//      opMode.telemetry.update();
+        //Speed up
+        while ((Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0) && (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 0.26) && linearOpMode.opModeIsActive()){
+            double tilesPercent = Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles);
+            //power = (maxPower / percent amnt from 0 to maxPower) * percent completed
+            double function = (power / 0.26) * tilesPercent;
+            if(function < 0.25) function = 0.25;
+            setMotorPower(lfm ? function : -function, rfm ? function : -function, lbm ? function : -function, rbm ? function : -function);
+            opMode.telemetry.addData("% Tiles", tilesPercent);
+            opMode.telemetry.addData("Power", function);
+            opMode.telemetry.update();
+        }
+        //Constant speed
+        while (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0.26 && (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 0.6) && linearOpMode.opModeIsActive()){
+            double function = power;
+            if(function < 0.25) function = 0.25;
+            setMotorPower(lfm ? function : -function, rfm ? function : -function, lbm ? function : -function, rbm ? function : -function);
+            opMode.telemetry.addLine("Constant Speed Phase");
+            opMode.telemetry.addData("Power", function);
+            opMode.telemetry.update();
+        }
+        //Slow down
+        while (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0.6 && (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 1) && linearOpMode.opModeIsActive()){
+            double tilesPercent = Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles);
+            double function = -(power / 0.4) * (tilesPercent - 1);
+            if(function < 0.25) function = 0.25;
+            setMotorPower(lfm ? function : -function, rfm ? function : -function, lbm ? function : -function, rbm ? function : -function);
+            opMode.telemetry.addData("% Tiles", tilesPercent);
+            opMode.telemetry.addData("Power", function);
+            opMode.telemetry.update();
+        }
+        setAllMotorPowers(0);
     }
 
     public final class FollowTrajectoryAction implements Action {
