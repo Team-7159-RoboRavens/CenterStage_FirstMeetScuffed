@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.ButtonMaps.Arm.THEArmButtonMap;
 import org.firstinspires.ftc.teamcode.ButtonMaps.Drive.NoamAndrewDriveBM;
 import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="TeleOp: Noam/Andrew Drive, THE Arm")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="THE TeleOp: Noam/Andrew Drive, THE Arm")
 public class TeleOp extends OpMode {
     //Global Variables
     CenterStageRobot robot;

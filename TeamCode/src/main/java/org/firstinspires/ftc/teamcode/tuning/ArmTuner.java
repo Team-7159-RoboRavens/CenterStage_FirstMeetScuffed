@@ -47,7 +47,7 @@ public class ArmTuner extends OpMode {
 //            robot.armMotor.setPower(0);
 //        }
 //        telemetry.addData("Intake Power", -gamepad1.left_stick_y);
-        telemetry.addData("Output Servo Pos", robot.tiltServo.getPosition());
+        telemetry.addData("Tilt Servo Pos", robot.tiltServo.getPosition());
         telemetry.addData("Airplane Servo Pos", robot.airplaneServo.getPosition());
         telemetry.update();
     }

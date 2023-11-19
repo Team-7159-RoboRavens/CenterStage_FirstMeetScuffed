@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.BasicRobots.MecanumDrive;
 @Config
 public class CenterStageRobot extends MecanumDrive {
     //Motors
-    public final DcMotorEx linearSlidesMotor1;
-    public final DcMotorEx linearSlidesMotor2;
+//    public final DcMotorEx linearSlidesMotor1;
+//    public final DcMotorEx linearSlidesMotor2;
 
     public final DcMotorEx armMotor;
 
@@ -28,18 +28,18 @@ public class CenterStageRobot extends MecanumDrive {
     public CenterStageRobot(HardwareMap hardwareMap, Pose2d pose, OpMode opMode) {
         super(hardwareMap, pose, opMode);
 
-        //Linear Slide Motors
-        linearSlidesMotor1 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor1");
-        linearSlidesMotor2 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor2");
-        //Setup
-        linearSlidesMotor1.setDirection(DcMotor.Direction.REVERSE);
-        linearSlidesMotor2.setDirection(DcMotor.Direction.FORWARD);
-        linearSlidesMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        linearSlidesMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        linearSlidesMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        linearSlidesMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        linearSlidesMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        linearSlidesMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        //Linear Slide Motors
+//        linearSlidesMotor1 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor1");
+//        linearSlidesMotor2 = hardwareMap.get(DcMotorEx.class, "linearSlidesMotor2");
+//        //Setup
+//        linearSlidesMotor1.setDirection(DcMotor.Direction.REVERSE);
+//        linearSlidesMotor2.setDirection(DcMotor.Direction.FORWARD);
+//        linearSlidesMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        linearSlidesMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        linearSlidesMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        linearSlidesMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+////        linearSlidesMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+////        linearSlidesMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //Initialize Claw Servo
         clawServo = hardwareMap.get(Servo.class, "clawServo");
@@ -54,7 +54,7 @@ public class CenterStageRobot extends MecanumDrive {
         tiltServo.scaleRange(0,1);
         //Force to be in the right place
         //TODO: find start number
-        tiltServo.setPosition(0);
+        tiltServo.setPosition(1);
 
         //Initialize Intake Motor
         armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
