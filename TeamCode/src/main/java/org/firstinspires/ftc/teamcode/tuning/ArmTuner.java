@@ -25,29 +25,29 @@ public class ArmTuner extends OpMode {
     public void loop() {
         if(et.time()-servoTime > 100){
             if(gamepad1.a){
-                robot.outputServo.setPower(1);
+                robot.clawServo.setPosition(robot.clawServo.getPosition() + 0.05);
                 servoTime = et.time();
             }else if(gamepad1.b){
-                robot.outputServo.setPower(-1);
+                robot.clawServo.setPosition(robot.clawServo.getPosition() - 0.05);
                 servoTime = et.time();
-            }else{
+            }/*else{
                 robot.outputServo.setPower(-1);
-            }
+            }*/
             if(gamepad1.x){
-                robot.airplaneServo.setPosition(robot.airplaneServo.getPosition()+0.05);
+                robot.tiltServo.setPosition(robot.tiltServo.getPosition()+0.05);
                 servoTime = et.time();
             } else if (gamepad1.y) {
-                robot.airplaneServo.setPosition(robot.airplaneServo.getPosition()-0.05);
+                robot.tiltServo.setPosition(robot.tiltServo.getPosition()-0.05);
                 servoTime = et.time();
             }
         }
-        if(gamepad1.left_stick_y > 0.1 || gamepad1.left_stick_y < -0.1){
-            robot.intakeMotor.setPower(-gamepad1.left_stick_y*0.8);
-        }else{
-            robot.intakeMotor.setPower(0);
-        }
-        telemetry.addData("Intake Power", -gamepad1.left_stick_y);
-//        telemetry.addData("Output Servo Pos", robot.outputServo.getPosition());
+//        if(gamepad1.left_stick_y > 0.1 || gamepad1.left_stick_y < -0.1){
+//            robot.armMotor.setPower(-gamepad1.left_stick_y*0.8);
+//        }else{
+//            robot.armMotor.setPower(0);
+//        }
+//        telemetry.addData("Intake Power", -gamepad1.left_stick_y);
+        telemetry.addData("Output Servo Pos", robot.tiltServo.getPosition());
         telemetry.addData("Airplane Servo Pos", robot.airplaneServo.getPosition());
         telemetry.update();
     }

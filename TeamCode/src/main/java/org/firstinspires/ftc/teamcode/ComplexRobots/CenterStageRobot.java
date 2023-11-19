@@ -3,9 +3,7 @@ package org.firstinspires.ftc.teamcode.ComplexRobots;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -18,12 +16,11 @@ public class CenterStageRobot extends MecanumDrive {
     public final DcMotorEx linearSlidesMotor1;
     public final DcMotorEx linearSlidesMotor2;
 
-    public final DcMotorEx intakeMotor;
+    public final DcMotorEx armMotor;
 
-    public final CRServo outputServo;
-    public static double outputServoCycleTime = 800;
+    public final Servo clawServo;
     public final Servo airplaneServo;
-
+    public final Servo tiltServo;
 
     //Sensors
 
@@ -41,23 +38,30 @@ public class CenterStageRobot extends MecanumDrive {
         linearSlidesMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         linearSlidesMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearSlidesMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        linearSlidesMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        linearSlidesMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        linearSlidesMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        linearSlidesMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //Initialize Output Servo
-        outputServo = hardwareMap.get(CRServo.class, "outputServo");
-//        //TODO: find numbers
-//        outputServo.scaleRange(0,1);
-//        //Force to be in the right place
-//        //TODO: find number
-//        outputServo.setPosition(0);
+        //Initialize Claw Servo
+        clawServo = hardwareMap.get(Servo.class, "clawServo");
+        clawServo.scaleRange(0,1);
+        //Force to be in the right place
+        //TODO: find start number
+        clawServo.setPosition(0);
+
+        //Initialize Tilt Servo
+        tiltServo = hardwareMap.get(Servo.class, "tiltServo");
+        //TODO: find scale range numbers
+        tiltServo.scaleRange(0,1);
+        //Force to be in the right place
+        //TODO: find start number
+        tiltServo.setPosition(0);
 
         //Initialize Intake Motor
-        intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
+        armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
         //Setup
-        intakeMotor.setDirection(DcMotor.Direction.FORWARD);
-        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotor.setDirection(DcMotor.Direction.FORWARD);
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //Initialize Airplane Servo
         airplaneServo = hardwareMap.get(Servo.class, "airplaneServo");

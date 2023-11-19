@@ -36,6 +36,7 @@ public class NoamAndrewDriveBM extends AbstractButtonMap {
         }
 
         if(opMode.gamepad1.back){
+            robot.imu.resetYaw();
         }
 
         //Slow Strafe Button
