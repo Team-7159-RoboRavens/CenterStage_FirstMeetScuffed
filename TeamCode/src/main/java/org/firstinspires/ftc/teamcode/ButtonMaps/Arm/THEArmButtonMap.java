@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 @Config
 public class THEArmButtonMap extends AbstractButtonMap {
     public static double armMotorMultiplier = 0.07;
-    public static double holdModePower = 0.001;
+    public static double holdModePower = -0.0007;
 
     private ElapsedTime et = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private double servoTime = 0;

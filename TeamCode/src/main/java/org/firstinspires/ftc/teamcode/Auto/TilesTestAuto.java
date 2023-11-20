@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ComplexRobots.CenterStageRobot;
 
-@Autonomous(name="Backstage AUTO")
-public class AutoRedBackstage extends LinearOpMode {
+@Autonomous(name="test auto")
+public class TilesTestAuto extends LinearOpMode {
     CenterStageRobot robot;
 
     @Override
@@ -19,6 +19,9 @@ public class AutoRedBackstage extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        robot.slowStartSlowStop(0, 0.5, 1.4, this);
+        robot.slowStartSlowStop(0, 0.5, 1, this);
+        telemetry.addData("ticks", robot.rightBack.getCurrentPosition());
+        telemetry.update();
+        sleep(5000);
     }
 }

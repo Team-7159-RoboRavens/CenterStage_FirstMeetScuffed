@@ -209,7 +209,7 @@ public class MecanumDrive {
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
+                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
         imu.initialize(parameters);
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
@@ -264,8 +264,8 @@ public class MecanumDrive {
     }
 
     //NEEDS A LOM BECAUSE IT LOOPS ITSELF
-    public static int ticksStraight = 1015;
-    public static int ticksStrafe = 1060;
+    public static int ticksStraight = 1000;
+    public static int ticksStrafe = 1030;
     /**
      * Cringe
      * @param direction 0=forwards, 1=right, 2=back, 3=left
@@ -273,7 +273,7 @@ public class MecanumDrive {
      */
     public void slowStartSlowStop(int direction, double power,  double tiles, LinearOpMode linearOpMode){
         //DIRECTIONS: 0=forwards, 1=right, 2=back, 3=left
-        double savedMotorPos = leftFront.getCurrentPosition();
+        double savedMotorPos = rightBack.getCurrentPosition();
         int ticks = ticksStraight;
         //these just make it so there's not an if statement for every direction
         //true = forwards, false = backwards
@@ -301,33 +301,34 @@ public class MecanumDrive {
 //      opMode.telemetry.addData("Power", function);
 //      opMode.telemetry.update();
         //Speed up
-        while ((Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0) && (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 0.26) && linearOpMode.opModeIsActive()){
-            double tilesPercent = Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles);
+        while ((Math.abs(rightBack.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0) && (Math.abs(rightBack.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 0.26) && linearOpMode.opModeIsActive()){
+            double tilesPercent = Math.abs(rightBack.getCurrentPosition()-savedMotorPos)/(ticks * tiles);
             //power = (maxPower / percent amnt from 0 to maxPower) * percent completed
             double function = (power / 0.26) * tilesPercent;
-            if(function < 0.25) function = 0.25;
+            if(function < 0.20) function = 0.20;
             setMotorPower(lfm ? function : -function, rfm ? function : -function, lbm ? function : -function, rbm ? function : -function);
             opMode.telemetry.addData("% Tiles", tilesPercent);
             opMode.telemetry.addData("Power", function);
             opMode.telemetry.update();
         }
         //Constant speed
-        while (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0.26 && (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 0.6) && linearOpMode.opModeIsActive()){
+        while (Math.abs(rightBack.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0.26 && (Math.abs(rightBack.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 0.5) && linearOpMode.opModeIsActive()){
             double function = power;
-            if(function < 0.25) function = 0.25;
+            if(function < 0.20) function = 0.20;
             setMotorPower(lfm ? function : -function, rfm ? function : -function, lbm ? function : -function, rbm ? function : -function);
             opMode.telemetry.addLine("Constant Speed Phase");
             opMode.telemetry.addData("Power", function);
             opMode.telemetry.update();
         }
         //Slow down
-        while (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0.6 && (Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 1) && linearOpMode.opModeIsActive()){
-            double tilesPercent = Math.abs(leftFront.getCurrentPosition()-savedMotorPos)/(ticks * tiles);
-            double function = -(power / 0.4) * (tilesPercent - 1);
-            if(function < 0.25) function = 0.25;
+        while (Math.abs(rightBack.getCurrentPosition()-savedMotorPos)/(ticks * tiles) >= 0.5 && (Math.abs(rightBack.getCurrentPosition()-savedMotorPos)/(ticks * tiles) < 1) && linearOpMode.opModeIsActive()){
+            double tilesPercent = Math.abs(rightBack.getCurrentPosition()-savedMotorPos)/(ticks * tiles);
+            double function = -(power / 0.5) * (tilesPercent - 1);
+            if(function < 0.20) function = 0.20;
             setMotorPower(lfm ? function : -function, rfm ? function : -function, lbm ? function : -function, rbm ? function : -function);
             opMode.telemetry.addData("% Tiles", tilesPercent);
             opMode.telemetry.addData("Power", function);
+//            opMode.telemetry.addData("Ticks", rightBack.getCurrentPosition());
             opMode.telemetry.update();
         }
         setAllMotorPowers(0);
